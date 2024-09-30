@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     private InputSystem_Actions _inputActions;
     private InputAction _move;
+    private InputAction _attack1;
+    private InputAction _attack2;
+    private InputAction _bowAttack;
 
     void Awake()
     {
@@ -27,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputActions = new InputSystem_Actions();
         _move = _inputActions.Player.Move;
+        _attack1 = _inputActions.Player.Attack1;
+        _attack2 = _inputActions.Player.Attack2;
+        _bowAttack = _inputActions.Player.BowAttack;
     }
 
     private void EnableInput(bool enable)
@@ -43,13 +49,35 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        MovePlayer();
+        UpdateMovement();
+        UpdateAttack();
     }
 
-    private void MovePlayer()
+    private void UpdateMovement()
     {
         Vector2 direction = _move.ReadValue<Vector2>();
         transform.Translate(new Vector2(1, 0) * direction * speed * Time.fixedDeltaTime);
+    }
+
+    private void UpdateAttack()
+    {
+        float attack1 = _attack1.ReadValue<float>();
+        if (attack1 > 0)
+        {
+            _animator.SetTrigger("Attack1");
+        }
+
+        float attack2 = _attack2.ReadValue<float>();
+        if (attack2 > 0)
+        {
+            _animator.SetTrigger("Attack2");
+        }
+
+        float bowAttack = _bowAttack.ReadValue<float>();
+        if (bowAttack > 0)
+        {
+            _animator.SetTrigger("BowAttack");
+        }
     }
 
     void LateUpdate()
@@ -62,6 +90,30 @@ public class PlayerMovement : MonoBehaviour
         {
             _spriteRenderer.flipX = direction.x > 0 ? false : true;
         }
+    }
 
+    private void OnAttack1()
+    {
+        _animator.SetTrigger("Attack1");
+    }
+
+    private void OnAttack2()
+    {
+        _animator.SetTrigger("Attack2");
+    }
+
+    private void OnBowAttack()
+    {
+        _animator.SetTrigger("BowAttack");
+    }
+
+    private void OnDamaged()
+    {
+        _animator.SetTrigger("Damaged");
+    }
+
+    private void OnDeath()
+    {
+        _animator.SetTrigger("Death");
     }
 }
