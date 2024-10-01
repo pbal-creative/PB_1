@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -55,8 +56,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateMovement()
     {
-        Vector2 direction = _move.ReadValue<Vector2>();
-        transform.Translate(new Vector2(1, 0) * direction * speed * Time.fixedDeltaTime);
+        // It need to check current animation is walking for preventing moving on atack.
+        // After implementing state machine, it should be refactored.
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName("Walk_Soldier"))
+        {
+            Vector2 direction = _move.ReadValue<Vector2>();
+            transform.Translate(new Vector2(1, 0) * direction * speed * Time.fixedDeltaTime);
+        }
     }
 
     private void UpdateAttack()
