@@ -1,0 +1,14 @@
+
+/Assets/ElvGames
+/Assets/Layer Lab
+Assets/ElvGames.meta
+Assets/Layer Lab.meta
+/.vscode
+/.plastic
+/Library
+/Logs
+/Packages
+/Temp
+/UserSettings
+*.sln
+*.csproj
