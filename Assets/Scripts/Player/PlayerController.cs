@@ -55,17 +55,20 @@ public class PlayerController : MonoBehaviour
     
     private void OnAttack1(InputAction.CallbackContext context)
     {
-        _character.SetAnimatorTrigger(GCharacterNameHashes.ATTACK_1);
+        _stat.speed = 1.0f;
+        //_character.SetAnimatorTrigger(GCharacterNameHashes.ATTACK_1);
     }
 
     private void OnAttack2(InputAction.CallbackContext context)
     {
-        _character.SetAnimatorTrigger(GCharacterNameHashes.ATTACK_2);
+        _stat.speed = 2.0f;
+        //_character.SetAnimatorTrigger(GCharacterNameHashes.ATTACK_2);
     }
 
     private void OnBowAttack(InputAction.CallbackContext context)
     {
-        _character.SetAnimatorTrigger(GCharacterNameHashes.BOW_ATTACK);
+        _stat.speed = 3.0f;
+        //_character.SetAnimatorTrigger(GCharacterNameHashes.BOW_ATTACK);
     }
 
     private void OnDamaged()
@@ -80,18 +83,20 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_character.CompareAnimationNameHash(GCharacterNameHashes.WALK))
+        if (_character.CompareAnimationNameHash(GCharacterNameHashes.WALK) ||
+            _character.CompareAnimationNameHash(GCharacterNameHashes.RUN) ||
+            _character.CompareAnimationNameHash(GCharacterNameHashes.RUN_FAST))
         {
-            _character.UpdateMovement(new Vector2(1, 0) * _direction * _stat.speed * Time.fixedDeltaTime);
+            _character.UpdateMovement(_direction * _stat.speed * Time.fixedDeltaTime);
         }
     }
 
     void LateUpdate()
     {
-        _character.SetAnimatorFloat(GStatNameHashes.SPEED, _direction.magnitude);
+        _character.SetAnimatorFloat(GStatNameHashes.SPEED, _direction.magnitude * _stat.speed);
         if (_direction.x != 0)
         {
-            _character.UpdateFlipX(_direction.x > 0 ? false : true);
+            _character.UpdateDirection(ref _direction);
         }
     }
 }

@@ -12,3 +12,11 @@ Assets/Layer Lab.meta
 /UserSettings
 *.sln
 *.csproj
+/Assets/Scenes
+/.idea
+/Assets/The DARK Series
+Assets/The DARK Series.meta
+PB_1.sln.DotSettings.user
+/obj
+*.DS_Store
+

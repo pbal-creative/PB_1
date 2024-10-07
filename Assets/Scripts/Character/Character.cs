@@ -15,9 +15,19 @@ public class Character : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void UpdateFlipX(bool flipX)
+    public void UpdateDirection(ref Vector2 direction)
     {
-        _spriteRenderer.flipX = flipX;
+        Vector2 scale;
+        if (direction.x > 0)
+        {
+            scale = Vector2.one;
+        }
+        else
+        {
+            scale = new Vector2(-1, 1);
+        }
+
+        transform.localScale = scale;
     }
 
     public void UpdateMovement(Vector2 position)

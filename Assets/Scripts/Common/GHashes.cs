@@ -4,7 +4,12 @@ namespace GHashes
 {
     class GCharacterNameHashes
     {
-        static public int WALK = Animator.StringToHash("Walk_Soldier");
+        static public int IDLE = Animator.StringToHash("Idle");
+
+        static public int WALK = Animator.StringToHash("Walk");
+        static public int RUN = Animator.StringToHash("Run");
+        static public int RUN_FAST = Animator.StringToHash("Run Fast");
+        
         static public int ATTACK_1 = Animator.StringToHash("Attack1");
         static public int ATTACK_2 = Animator.StringToHash("Attack2");
         static public int BOW_ATTACK = Animator.StringToHash("BowAttack");
