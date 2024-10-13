@@ -20,3 +20,6 @@ PB_1.sln.DotSettings.user
 /obj
 *.DS_Store
 
+/Assets/Scenes
+/Assets/SuperMaxim
+Assets/SuperMaxim.meta

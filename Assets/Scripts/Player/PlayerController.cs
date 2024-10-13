@@ -2,20 +2,15 @@ using GHashes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+// Based on player's input
+public class PlayerController : BaseCharacterController
 {
-    private Stat _stat;
-    private Character _character;
     private InputSystem_Actions _inputActions;
 
-    private Vector2 _direction;
-
-    void Awake()
+    protected override void Awake()
     {
-        _stat = new Stat();
-        _character = GetComponent<Character>();
-        _direction = Vector2.zero;
-
+        base.Awake();
+        
         InitInput();
         EnableInput(true);
     }
@@ -27,7 +22,7 @@ public class PlayerController : MonoBehaviour
         _inputActions.Player.Move.canceled += OnStopMove;
         _inputActions.Player.Attack1.performed += OnAttack1;
         _inputActions.Player.Attack2.performed += OnAttack2;
-        _inputActions.Player.BowAttack.performed += OnBowAttack;
+        _inputActions.Player.Jump.performed += OnJump;
     }
 
     private void EnableInput(bool enable)
@@ -42,61 +37,57 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void OnMove(InputAction.CallbackContext context)
     {
         _direction = context.ReadValue<Vector2>();
+        Logger.Log($"OnMove() direction: {_direction.magnitude}");
     }
 
     private void OnStopMove(InputAction.CallbackContext context)
     {
         _direction = Vector2.zero;
+        Debug.Log($"OnStopMove() direction: {_direction.magnitude}");
     }
     
     private void OnAttack1(InputAction.CallbackContext context)
     {
-        _stat.speed = 1.0f;
-        //_character.SetAnimatorTrigger(GCharacterNameHashes.ATTACK_1);
+        SetAnimatorTrigger(GCharacterNameHashes.SLASH_ATTACK_1);
     }
 
     private void OnAttack2(InputAction.CallbackContext context)
     {
-        _stat.speed = 2.0f;
-        //_character.SetAnimatorTrigger(GCharacterNameHashes.ATTACK_2);
+        SetAnimatorTrigger(GCharacterNameHashes.SLASH_ATTACK_2);
     }
 
-    private void OnBowAttack(InputAction.CallbackContext context)
+    private void OnJump(InputAction.CallbackContext context)
     {
-        _stat.speed = 3.0f;
-        //_character.SetAnimatorTrigger(GCharacterNameHashes.BOW_ATTACK);
+        //SetAnimatorTrigger(GCharacterNameHashes.SPIN_ATACK);
     }
 
     private void OnDamaged()
     {
-        _character.SetAnimatorTrigger(GCharacterNameHashes.DAMAGED);
+        SetAnimatorTrigger(GCharacterNameHashes.DAMAGED);
     }
 
     private void OnDeath()
     {
-        _character.SetAnimatorTrigger(GCharacterNameHashes.DEATH);
+        SetAnimatorTrigger(GCharacterNameHashes.DEATH);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (_character.CompareAnimationNameHash(GCharacterNameHashes.WALK) ||
-            _character.CompareAnimationNameHash(GCharacterNameHashes.RUN) ||
-            _character.CompareAnimationNameHash(GCharacterNameHashes.RUN_FAST))
+        bool isJumpPressed = _inputActions.Player.Jump.ReadValue<float>() > 0.01f ? true : false;
+        bool isDashPressed = _inputActions.Player.Dash.ReadValue<float>() > 0.01f ? true : false;
+        bool isRollPressed = _inputActions.Player.Roll.ReadValue<float>() > 0.01f ? true : false;
+
+        if (isJumpPressed)
         {
-            _character.UpdateMovement(_direction * _stat.speed * Time.fixedDeltaTime);
+            _rigidBody.AddForceY(_jumpForce, ForceMode2D.Impulse);
         }
     }
 
     void LateUpdate()
     {
-        _character.SetAnimatorFloat(GStatNameHashes.SPEED, _direction.magnitude * _stat.speed);
-        if (_direction.x != 0)
-        {
-            _character.UpdateDirection(ref _direction);
-        }
+       
     }
 }

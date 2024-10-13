@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class NonPlayerController : MonoBehaviour
+// Based on behavior tree
+public class NonPlayerController : BaseCharacterController
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

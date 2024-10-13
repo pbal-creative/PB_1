@@ -33,9 +33,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BowAttack",
+                    "name": "Jump",
                     "type": "Button",
-                    "id": "2a90bf6e-5549-4657-b4e7-2a9e8dfab689",
+                    "id": "ec19ba4b-06f1-4679-a8ab-9d4cd37f020a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "36093f8b-12a6-4f1f-81ae-741996fe7a72",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "77843fa9-beaa-4cb8-938b-931f3f65f41c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -199,12 +217,34 @@
                 },
                 {
                     "name": "",
-                    "id": "79adfc6c-f759-453f-9a59-6e66d6bfa229",
-                    "path": "<Keyboard>/e",
+                    "id": "dee7328e-8309-4278-8043-7a9286b48323",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "BowAttack",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "610b2ea9-dbd7-49d5-8004-0fc131d45a2a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d35b9f59-e0ec-42d4-a288-04d206793e52",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
